@@ -1,11 +1,15 @@
 import express from "express";
-import cors from "cors";        
-dotenv.config();
-import loginSignUp from "./routes/loginSignUp";
-import userRoutes from "./routes/userRoutes";
-import connectDB from "./config/db";
-import AdminRoutes from "./routes/AdminRoutes";
+import cors from "cors";
+import dotenv from "dotenv";
+import loginSignUp from "./routes/loginSignUp.js";
+import userRoutes from "./routes/userRoutes.js";
+import connectDB from "./config/db.js";
+import AdminRoutes from "./routes/AdminRoutes.js";
+
+const app = express();
 const PORT = 8080;
+
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());

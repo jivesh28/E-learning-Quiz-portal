@@ -3,11 +3,7 @@ const router = express.Router();
 import { protect, isAdmin } from "../middlewares/authMiddlewares";
 const User = require("../models/User"); 
 
-// dsec admin details
-// route protected
-
 router.get("/details", protect, isAdmin ,(req, res) => {
-  // Assuming req.user is populated by the protect middleware
   const user = req.user;
 
   if (!user || user.role !== "admin") {
@@ -18,23 +14,18 @@ router.get("/details", protect, isAdmin ,(req, res) => {
     message: "Welcome to the admin dashboard",
     user: {
       _id: user._id,
-      //   name: user.name,
-      //   email: user.email,
       role: user.role,
     },
   });
 });
 
-// Get all users
 router.get("/users", (req, res) => {
-  // Assuming req.user is populated by the protect middleware
   const user = req.user;
 
   if (!user || user.role !== "admin") {
     return res.status(403).json({ message: "Access denied" });
   }
 
-  // Fetch all users from the database
   User.find({}, "-password")
     .then((users) => {
       res.json({
@@ -48,7 +39,6 @@ router.get("/users", (req, res) => {
     });
 });
 
-// get specific user results
 router.get("/user/:id", protect, isAdmin, async (req, res) => {
   const userId = req.params.id;
 
